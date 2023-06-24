@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard Figure</title>
+    <th:block th:replace="/dashboard/layout/head :: head"></th:block>
+</head>
+
+<body>
+<div id="wrapper">
+    <th:block th:replace="/dashboard/layout/topbar :: topbar"></th:block>
+    <th:block th:replace="/dashboard/layout/left-sidebar :: left-sidebar"></th:block>
+
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li><a href="#">Figure Store</a> &ensp; <i class="fa-solid fa-chevron-right"></i>  &ensp;</li>
+                                    <li>Dashboard</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Welcome!</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                <!-- Page content -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="/dashboard/layout/footer :: footer"></th:block>
+</div>
+
+<th:block th:replace="/dashboard/layout/script :: script"></th:block>
+</body>
+</html>

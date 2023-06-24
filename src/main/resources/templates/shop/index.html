@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard Figure</title>
+    <th:block th:replace="/layout/head :: head"></th:block>
+    <link rel="stylesheet" href="/assets/bootstrap/v5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <style>
+        .content {
+            padding: 10px;
+        }
+        .product-carts {
+            display: flex;
+            flex-wrap: wrap;
+            float: left;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 100px;
+        }
+
+        .product-unit {
+            font-weight: bold;
+        }
+        .product-price {
+            color: #ff6600;
+            font-weight: bold;
+        }
+        .product-cart {
+            margin: 5px;
+            padding: 0;
+            float: left;
+        }
+        .card-footer {
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+        .btnAddCart {
+            width: 100%;
+        }
+        .payment {
+            float: right;
+            padding-right: 70px;
+        }
+        .invalid {
+            border: 1px solid red;
+        }
+        .payment .payment_defult{
+            margin-top: 20px;
+        }
+        .product-detail {
+            border: none;
+        }
+        .quantity-input {
+            margin: 0;
+            width: 50px;
+        }
+        .changeQuantity {
+            border: none;
+            background-color: #fff;
+            padding: 0;
+        }
+        .card a {
+            padding: 0;
+        }
+        .card-body h5,span {
+            text-align: left;
+        }
+        .cart-count {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 4px;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 14px;
+        }
+
+        .fa-cart-shopping {
+            position: relative;
+        }
+
+        .btn {
+            position: relative;
+        }
+        .sort-search {
+            float: right;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            z-index: 999;
+            top: 100%;
+            left: 0;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        .filter_group-subtitle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .filter_group-subtitle .icon-control {
+            transition: transform 0.3s ease;
+        }
+
+        .open .filter_group-subtitle .icon-control {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu .filter_group-content {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .dropdown-menu .checkbox-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dropdown-menu .checkbox-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .dropdown-menu .checkbox-list input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .dropdown-menu .checkbox-list label {
+            margin: 0;
+        }
+
+        .dropdown-menu .checkbox-list label span {
+            font-weight: bold;
+        }
+
+        .dropdown-menu .checkbox-list input[type="checkbox"]:checked + label span {
+            color: #f00;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+<div id="wrapper">
+    <th:block th:replace="/layout/topbar :: topbar"></th:block>
+    <th:block th:replace="/layout/left-sidebar :: left-sidebar"></th:block>
+
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h1>List Of Figure</h1>
+                        </div>
+                        <div class="col-sm-6 sort-search">
+
+                            <div class="row">
+
+                                <div class="filter_group col-sm-4">
+                                    <div class="filter_group_block">
+                                        <div class="filter_group-subtitle dropdown-toggle" id="categoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span>Danh mục</span>
+                                        </div>
+                                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                            <div class="filter_group-content">
+                                                <ul class="checkbox-list">
+                                                    <li>
+                                                        <input type="checkbox" id="category-onepiece" name="category" value="onepiece">
+                                                        <label for="category-onepiece">ONE PIECE</label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="checkbox" id="category-dragonball" name="category" value="dragonball">
+                                                        <label for="category-dragonball">DRAGON BALL</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="filter_group col-sm-5" aria-expanded="true">
+                                    <div class="filter_group_block">
+                                        <div class="filter_group-subtitle dropdown-toggle" id="priceDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span>Lọc giá</span>
+                                            <span class="icon-control"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div class="dropdown-menu" aria-labelledby="priceDropdown">
+                                            <div class="filter_group-content filter-price">
+                                                <ul class="checkbox-list">
+                                                    <li>
+                                                        <input type="checkbox" id="p1" name="cc" data-price="(price_variant:product < 100000)">
+                                                        <label for="p1">
+                                                            <span>Dưới</span> 1.000.000₫
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="checkbox" id="p2" name="cc" data-price="(price_variant:product range 100000_200000)">
+                                                        <label for="p2">
+                                                            1.000.000₫ - 3.000.000₫
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="checkbox" id="p3" name="cc" data-price="(price_variant:product range 200000_300000)">
+                                                        <label for="p3">
+                                                            3.000.000₫ - 5.000.000₫
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="checkbox" id="p4" name="cc" data-price="(price_variant:product range 300000_400000)">
+                                                        <label for="p4">
+                                                            5.000.000₫ - 10.000.000₫
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="checkbox" id="p5" name="cc" data-price="(price_variant:product > 400000)">
+                                                        <label for="p5">
+                                                            <span>Trên</span> 10.000.000₫
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-outline-light modal-cart" id="create">
+                                Giỏ hàng
+                                <i class="fa-solid fa-cart-shopping">
+                                </i>
+                                <span class="cart-count" id="count-cart">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <th:block th:replace="/shop/modal-cart :: modal-cart"></th:block>
+
+                <div class="row">
+                    <div id="product-carts" class="row product-carts">
+                        <!--                <div class="card product-cart col-lg-2">-->
+                        <!--                    <img src="https://res.cloudinary.com/toanphat/image/upload/c_scale,w_280,h_180,q_90/c0123_product_images/c690c830-28b7-4bc7-911e-83c408c85d83.jpg" class="card-img-top" alt="...">-->
+                        <!--                    <div class="card-body">-->
+                        <!--                        <h5 class="card-title">Card title</h5>-->
+                        <!--                        <div class="product-price-unit mb-2">-->
+                        <!--                            <span>300.000 đ</span>-->
+                        <!--                            <span>Thùng</span>-->
+                        <!--                        </div>-->
+                        <!--                        <button class="btn btn-outline-primary">Add to cart</button>-->
+                        <!--                    </div>-->
+                        <!--                </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/product-detail"></a>
+    <th:block th:replace="/layout/footer :: footer"></th:block>
+</div>
+
+<th:block th:replace="/layout/script :: script"></th:block>
+<script src="/assets/jquery/jquery-3.7.0.min.js"></script>
+<script src="/assets/jquery/jquery.validate.js"></script>
+<script src="/assets/bootstrap/v5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="/assets/js/magnific-popup-1.1.0.js"></script>
+
+<script src="/assets/js/appBase.js"></script>
+
+<script>
+    const page = {
+        urls: {
+            getAllCategories: AppBase.API_CATEGORY,
+            getAllProducts: AppBase.API_PRODUCT,
+            getAllCartDetails: AppBase.API_CART_DETAIL,
+            getAddToCart : AppBase.API_ADD_TO_CART,
+            getPayment: AppBase.API_PAYMENT,
+            getDelete: AppBase.API_DELETED_CART_ITEM,
+            getChangeQuantity: AppBase.API_CHANGE_QUANTITY
+        },
+        elements: {},
+        commands: {},
+        dialogs: {
+            elements: {},
+            commands: {}
+        },
+    }
+
+    page.elements.productCarts = $('#product-carts')
+
+    page.dialogs.elements.tbCart = $('#tbCart tbody')
+    page.dialogs.elements.modalCart = $('#mdCart')
+    page.dialogs.elements.totalAmount = $('#totalAmount')
+
+    page.dialogs.elements.btnAddCart = $('.btnAddCart')
+    page.elements.countCart = $('#count-cart')
+
+    page.dialogs.elements.payment = $('.payment-cart')
+    page.dialogs.elements.cancelPayment = $('.cancel-cart')
+
+    page.dialogs.elements.paymentDefult = $('#payment_defult')
+    page.dialogs.elements.frmPayment = $('#frmPayment')
+    page.dialogs.elements.changeQuantity = $('.changeQuantity')
+
+    page.commands.getAllProducts = () => {
+        $.ajax({
+            type: 'GET',
+            url: page.urls.getAllProducts
+        })
+            .done((data) => {
+                $.each(data, (index, item) => {
+                    const str = page.commands.renderProduct(item);
+
+                    page.elements.productCarts.prepend(str)
+                })
+                page.commands.doAddToCart();
+                page.commands.showCart();
+
+            })
+            .fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+    }
+
+    page.commands.renderProduct = (obj) => {
+        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_280_h_180_Q_100 + '/' + obj.avatar.fileFolder + '/' + obj.avatar.fileName;
+        const price = obj.price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+        return `
+                <div class="card product-cart col-2">
+                    <a title="product-detail" href="shop/product-detail/${obj.id}" class="btn btn-outline-primary product-detail">
+                        <img src="${imageUrl}" class="card-img-top" alt="..." height="200px">
+                    </a>
+                    <div class="card-body">
+                        <div>
+                            <a title="Edit" href="shop/product-detail/${obj.id}" class="btn btn-outline-primary product-detail">
+                                <h5 class="card-title">${obj.title}</h5>
+                            </a>
+                        </div>
+                        <div>
+                            <span class="product-price">${price}</span>
+<!--                            <span class="product-unit">${obj.unit}</span>-->
+                        </div>
+                        <input type="number" class="quantity-product" value="${obj.quantity}" hidden="true"></input>
+                    </div>
+                    <div class="card-footer">
+                          <button type="button" class="btn btn-outline-primary btnAddCart" data-id="${obj.id}">Add to cart</button>
+                    </div>
+                </div>
+            `;
+    }
+
+    page.commands.getAllCartDetail = () => {
+        $.ajax({
+            type: 'GET',
+            url: page.urls.getAllCartDetails
+        })
+            .done((data) => {
+                let totalAmount = 0;
+                let count = 0;
+                $.each(data, (index, item) => {
+                    const str = page.commands.renderCart(item);
+                    totalAmount = totalAmount + item.amount;
+                    page.dialogs.elements.tbCart.prepend(str)
+                    count = count + item.quantity
+                })
+                page.elements.countCart.text(count)
+                page.dialogs.elements.totalAmount.text(totalAmount.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
+                page.commands.deleteProduct();
+                page.commands.changeQuantity();
+            })
+            .fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+    }
+
+    page.commands.renderCart = (obj) => {
+        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_280_h_180_Q_100 + '/' + obj.productDTO.avatar.fileFolder + '/' + obj.productDTO.avatar.fileName;
+        const price = obj.price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+        const amount = obj.amount.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+        return `
+                <tr id="tr_${obj.id}">
+                    <td>
+                        <span class="product-id">${obj.id}</span>
+                    </td>
+                    <td>${obj.title}</td>
+                    <td>
+                         <img src="${imageUrl}" class="card-img-top" alt="...">
+                    </td>
+                    <td>${obj.unit}</td>
+                    <td>
+                        <span class="price-obj" hidden="true">${obj.price}</span>
+                        <span class="price">${price}</span>
+                    </td>
+                    <td>
+                        <button type="button" class="changeQuantity" data-id="${obj.id}">
+                            <input class="quantity-input" name="quantity" min="1" max="100" value="${obj.quantity}" type="number">
+                        </button>
+                    </td>
+                    <td>
+                        <span class="amount">${amount}</span>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-danger delete" data-id="${obj.id}" >
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            `;
+    }
+
+    page.commands.getProductById = (productId) => {
+        return $.ajax({
+            type: 'GET',
+            url: page.url.getAllProduct + '/' + productId
+        });
+    }
+
+
+    page.commands.showCart = () => {
+        $('.modal-cart').on('click', () => {
+            page.dialogs.elements.modalCart.addClass('show');
+            page.dialogs.elements.modalCart.modal('show')
+        })
+    }
+
+    page.commands.doAddToCart = () => {
+        $('.btnAddCart').on('click', function () {
+            let productId = $(this).data('id');
+            let cartItem = {
+                productId : productId,
+                quantity: 1
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: 'POST',
+                url: page.urls.getAddToCart,
+                data: JSON.stringify(cartItem)
+            })
+                .done((data) => {
+                    page.dialogs.elements.tbCart.empty();
+                    let totalAmount = 0;
+                    let count = 0;
+                    $.each(data, (index, item) => {
+                        const str = page.commands.renderCart(item);
+                        totalAmount = totalAmount + item.amount;
+                        page.dialogs.elements.tbCart.prepend(str)
+                        count = count + item.quantity
+                    })
+                    page.elements.countCart.text(count)
+                    page.dialogs.elements.totalAmount.text(totalAmount.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
+                    page.commands.deleteProduct();
+                    page.commands.changeQuantity();
+                })
+                .fail((err) => {
+                console.log(err)
+                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+            })
+        })
+    }
+
+    page.commands.deleteProduct = () => {
+        $('.delete').on('click', function () {
+            let cartDetailId = $(this).data('id')
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085D6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    page.dialogs.commands.doDelete(cartDetailId);
+                }
+            })
+        })
+    }
+
+    page.dialogs.commands.doDelete = (cartDetailId) => {
+        $.ajax({
+            type: "DELETE",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: page.urls.getDelete + '/' + cartDetailId,
+        }).done((data) => {
+
+            AppBase.SweetAlert.showSuccessAlert(AppBase.AlertMessageEn.SUCCESS_DELETED);
+
+            page.dialogs.elements.tbCart.empty();
+            let totalAmount = 0;
+            let count = 0;
+            $.each(data, (index, item) => {
+                const str = page.commands.renderCart(item);
+                totalAmount = totalAmount + item.amount;
+                page.dialogs.elements.tbCart.prepend(str)
+                count = count + item.quantity
+            })
+            page.elements.countCart.text(count)
+            page.dialogs.elements.totalAmount.text(totalAmount.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
+            page.commands.deleteProduct();
+            page.commands.changeQuantity();
+
+            page.commands.handleImagePopup();
+
+        }).fail(function (jqXHR) {
+            AppBase.SweetAlert.showErrorAlert(jqXHR.responseJSON.message);
+        })
+    }
+
+
+    page.commands.changeQuantity = () => {
+        $('.changeQuantity').on('click', function (){
+            let cartDetailId = $(this).data('id');
+            let quantity = $(this).find('.quantity-input').val()
+            let cartDetail = {
+                quantity: quantity
+            }
+            $.ajax({
+                type: "PATCH",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: page.urls.getChangeQuantity + '/' + cartDetailId,
+                data: JSON.stringify(cartDetail)
+            })
+                .done((data) => {
+                    page.dialogs.elements.tbCart.empty();
+                    let totalAmount = 0;
+                    let count = 0;
+                    $.each(data, (index, item) => {
+                        const str = page.commands.renderCart(item);
+                        totalAmount = totalAmount + item.amount;
+                        page.dialogs.elements.tbCart.prepend(str)
+                        count = count + item.quantity
+                    })
+                    page.elements.countCart.text(count)
+                    page.dialogs.elements.totalAmount.text(totalAmount.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
+                    page.commands.deleteProduct();
+                    page.commands.changeQuantity();
+                })
+                .fail((err) => {
+                    console.log(err)
+                    AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                })
+        })
+    }
+
+    page.commands.getPayment = () => {
+            let pay =  $(".payment_defult:checked").val();
+            console.log(pay)
+            let bill = new Bill();
+            if(pay === 'momo') {
+                bill = {
+                    status: "DONE"
+                }
+            }
+            if (pay === 'cod') {
+                bill = {
+                    status: "ORDER"
+                }
+            }
+            console.log(bill)
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: 'POST',
+                url: page.urls.getPayment,
+                data: JSON.stringify(bill)
+            })
+                .done((data) => {
+                    console.log(data)
+                    AppBase.SweetAlert.showSuccessAlert(AppBase.AlertMessageEn.SUCCESS_PAYMENT);
+                    page.dialogs.elements.tbCart.empty()
+                    page.commands.getAllCartDetail();
+                    page.dialogs.elements.modalCart.removeClass('show');
+                    page.dialogs.elements.modalCart.modal('hide')
+                })
+                .fail((jqXHR) => {
+                    AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_400);
+                })
+    }
+
+    page.dialogs.elements.frmPayment.validate({
+        rules: {
+            payment_method: {
+                required: true,
+            }
+        },
+        messages: {
+            payment_method: {
+                required: "Vui lòng chọn phương thức thanh toán.",
+            }
+        },
+        errorLabelContainer: "#mdCart .modal-alert-danger",
+        errorPlacement: function (error, element) {
+            error.appendTo("#mdCart .modal-alert-danger");
+        },
+        showErrors: function (errorMap, errorList) {
+            if (this.numberOfInvalids() > 0) {
+                $("#mdCart .modal-alert-danger").removeClass("hide").addClass("show");
+            } else {
+                $("#mdCart .modal-alert-danger").removeClass("show").addClass("hide").empty();
+                $("#frmPayment input.error").removeClass("error");
+            }
+            this.defaultShowErrors();
+        },
+        submitHandler: function () {
+            page.commands.getPayment();
+        }
+    })
+    //
+    // page.commands.logout = () => {
+    //     $('.logout-user').on('click', () => {
+    //         page.dialogs.elements.tbCart.empty();
+    //     })
+    // }
+
+    page.loadData = () => {
+        page.commands.getAllCartDetail();
+        page.commands.getAllProducts();
+
+    }
+
+    page.initializeControlEvent = () => {
+        page.dialogs.elements.payment.on('click', () => {
+            page.dialogs.elements.frmPayment.trigger('submit');
+        });
+    }
+
+    $(() => {
+        page.loadData();
+        page.initializeControlEvent();
+    })
+
+
+</script>
+
+
+</body>
+</html>

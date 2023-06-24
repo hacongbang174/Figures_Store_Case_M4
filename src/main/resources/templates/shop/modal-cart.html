@@ -1,0 +1,63 @@
+<th:block th:fragment="modal-cart">
+
+    <div class="modal fade" id="mdCart" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
+         data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal show cart</h1>
+                    <button type="button" class="btn-close btnClose" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="modal-alert-danger hide">
+                    </div>
+
+                    <table id="tbCart" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbdCart">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="6" style="text-align: center"> Tổng tiền </th>
+                                <th><span id="totalAmount"></span></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <form method="post" id="frmPayment">
+                    <div class="payment">
+                        <div class="panel-default">
+                            <input class="payment_defult" value="momo" name="payment_method" type="radio"
+                                   data-target="createp_account" />
+                            <label data-toggle="collapse" data-target="#collapsedefult"
+                                   aria-controls="collapsedefult">Momo</label>
+                        </div>
+                        <div class="panel-default">
+                            <input class="payment_defult" value="cod" name="payment_method" type="radio"
+                                   data-target="createp_account" />
+                            <label data-toggle="collapse" data-target="#collapsedefult"
+                                   aria-controls="collapsedefult">Thanh toán khi nhận hàng</label>
+                        </div>
+                        <button type="button" class="btn btn-outline-success payment-cart">
+                            Thanh toán
+                        </button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

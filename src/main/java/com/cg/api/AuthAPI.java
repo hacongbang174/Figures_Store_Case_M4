@@ -72,7 +72,7 @@ public class AuthAPI {
         }
 
         try {
-            User user = userService.save(userReqDTO.toUser(null, new LocationRegion(null)));
+            User user = userService.save(userReqDTO.toUser(null));
 
             return new ResponseEntity<>(user.toUserLoginDTO(), HttpStatus.CREATED);
 

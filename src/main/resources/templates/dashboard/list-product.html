@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="/assets/css/magnific-popup.css">
     <link rel="stylesheet" href="/assets/css/preview-image.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
-
+    <style>
+        #paginationNav {
+            margin-top: 10px;
+            justify-content: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -22,7 +27,6 @@
 
     <!-- Modal Update Customer -->
     <th:block th:replace="/dashboard/modal-update :: modal-update"></th:block>
-
 
 
     <div class="content-page">
@@ -65,13 +69,20 @@
                         <tbody>
                         </tbody>
                     </table>
+
+                </div>
+                <div class="row">
+                        <nav id="paginationNav">
+                            <ul class="pagination justify-content-center">
+                                <!-- Các nút phân trang sẽ được thêm vào đây -->
+                            </ul>
+                        </nav>
                 </div>
 
                 <div class="loader hide"></div>
             </div>
         </div>
     </div>
-
 
 
     <th:block th:replace="/layout/footer :: footer"></th:block>
@@ -112,6 +123,8 @@
     page.elements.tempProduct = $("#tempProduct");
     page.elements.currentRow = $("#currentRow");
     page.elements.btnShowCreateForm = $("#create");
+
+    page.elements.pagination = $('.pagination')
 
 
     page.dialogs.elements.frmCreateCustomer = $('#frmCreateProduct');
@@ -165,7 +178,7 @@
         let imageFileUrl = AppBase.BASE_URL_CLOUD_IMAGE + "/" + avatar.fileFolder + "/" + avatar.fileName;
         let aClass = "image-popup-vertical-fit";
 
-        page.elements.frmListProduct.prepend($(tempProduct(product.id, product.title, price, product.quantity, product.unit, product.description, product.categoryTitle, imageFileUrl, image_thumbnail, aClass)));
+        page.elements.frmListProduct.append($(tempProduct(product.id, product.title, price, product.quantity, product.unit, product.description, product.categoryTitle, imageFileUrl, image_thumbnail, aClass)));
     }
 
     page.commands.replace = (productId, price) => {
@@ -177,19 +190,26 @@
     }
 
 
-    page.commands.getAllProduct = () => {
+    page.commands.getAllProduct = (pageProduct, pageSize) => {
         $.ajax({
             type: 'GET',
-            url: page.url.getAllProduct
+            url: page.url.getAllProduct,
+            data: {
+                page: pageProduct,
+                pageSize: pageSize
+            }
         })
             .done((data) => {
+                page.elements.frmListProduct.empty();
                 let price = 0;
-                $.each(data, (index, item) => {
+                $.each(data.content, (index, item) => {
                     product = new Product(item.id, item.title, item.price, item.quantity, item.unit, item.description, item.category.title);
                     avatar = item.avatar;
-                    price = product.price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+                    price = product.price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
                     page.commands.addRow(price);
+
                 })
+                page.commands.displayPagination(data.totalPages, data.number + 1);
                 page.commands.showCreateModal();
                 page.commands.showUpdateModal();
                 // page.commands.addEventShowActionButton();
@@ -198,6 +218,31 @@
                 AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
             });
     }
+
+    // page.commands.loadProduct = (products) => {
+    //     page.elements.productCarts.empty();
+    //
+    //     $.each(products, (index, item) => {
+    //         const str = page.commands.renderProduct(item);
+    //
+    //         page.elements.productCarts.prepend(str)
+    //     })
+    // }
+
+    page.commands.displayPagination = (totalPages, currentPage) => {
+        page.elements.pagination.empty();
+
+        let previousBtn = '<li class="page-item"><a class="page-link" href="#" onclick="page.commands.getAllProduct(' + (currentPage - 1) + ', 10)">Previous</a></li>';
+        page.elements.pagination.append(previousBtn);
+
+        for (let i = 1; i <= totalPages; i++) {
+            let pageBtn = '<li class="page-item ' + (i === currentPage ? 'active' : '') + '"><a class="page-link" href="#" onclick="page.commands.getAllProduct(' + i + ', 10)">' + i + '</a></li>';
+            page.elements.pagination.append(pageBtn);
+        }
+
+        let nextBtn = '<li class="page-item"><a class="page-link" href="#" onclick="page.commands.getAllProduct(' + (currentPage + 1) + ', 10)">Next</a></li>';
+        page.elements.pagination.append(nextBtn);
+    };
 
     page.commands.getProductById = (productId) => {
         return $.ajax({
@@ -393,7 +438,7 @@
 
             product = data;
             avatar = product.avatar;
-            let price = product.price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+            let price = product.price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
             page.commands.addRow(price);
 
             AppBase.SweetAlert.showSuccessAlert(AppBase.AlertMessageEn.SUCCESS_CREATED);
@@ -442,7 +487,7 @@
         }).done((data) => {
             product = data;
             avatar = product.avatar;
-            let price = product.price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+            let price = product.price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
             page.commands.replace(productId, price);
 
             AppBase.SweetAlert.showSuccessAlert(AppBase.AlertMessageEn.SUCCESS_UPDATED);
@@ -520,7 +565,6 @@
     // page.commands.hideLoadingSpinner = () => {
     //     $('#loading').remove();
     // }
-
 
 
     page.dialogs.elements.clearImagePreview = () => {
@@ -712,11 +756,11 @@
 
 
     page.loadData = () => {
-        page.commands.getAllProduct();
+        page.commands.getAllProduct(1, 10);
     }
 
     $(() => {
-        page.commands.getAllProduct();
+        page.loadData();
         page.initializeControlEvent();
 
     })

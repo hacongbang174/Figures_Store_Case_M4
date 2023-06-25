@@ -65,8 +65,6 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        LocationRegion locationRegion = locationRegionRepository.save(user.getLocationRegion());
-        user.setLocationRegion(locationRegion);
         return userRepository.save(user);
     }
 

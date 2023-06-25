@@ -45,7 +45,7 @@ public class UserReqDTO {
     private RoleDTO role;
 
 
-    public User toUser(Long id, LocationRegion locationRegion) {
+    public User toUser(Long id) {
         return new User()
                 .setId(id)
                 .setFullName(fullName)
@@ -53,7 +53,6 @@ public class UserReqDTO {
                 .setPassword(password)
                 .setEmail(email)
                 .setPhone(phone)
-                .setLocationRegion(locationRegion)
                 .setRole(role.toRole());
     }
 

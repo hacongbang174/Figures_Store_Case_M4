@@ -2,8 +2,12 @@ package com.cg.service.billDetail;
 
 import com.cg.model.BillDetail;
 import com.cg.model.CartDetail;
+import com.cg.model.dto.bill.BillDTO;
+import com.cg.model.dto.bill.BillDetailDTO;
+import com.cg.model.dto.cart.CartDetailDTO;
 import com.cg.repository.BillDetailRepository;
 import com.cg.repository.CartDetailRepository;
+import com.cg.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +24,8 @@ public class BillDetailServiceImpl implements IBillDetailService {
 
     @Autowired
     private CartDetailRepository cartDetailRepository;
+
+
 
     @Override
     public List<BillDetail> findAll() {
@@ -48,8 +54,19 @@ public class BillDetailServiceImpl implements IBillDetailService {
 
     @Override
     public BillDetail addBillDetail(BillDetail billDetail, CartDetail cartDetail) {
+
         BillDetail billDetail1 = billDetailRepository.save(billDetail);
         cartDetailRepository.delete(cartDetail);
         return billDetail1 ;
+    }
+
+    @Override
+    public List<BillDetailDTO> findAllBillDetailDTO(Long id) {
+        return billDetailRepository.findAllBillDetailDTO(id);
+    }
+
+    @Override
+    public List<BillDetailDTO> findBillDetailByBillId(Long id) {
+        return billDetailRepository.findBillDetailByBillId(id);
     }
 }

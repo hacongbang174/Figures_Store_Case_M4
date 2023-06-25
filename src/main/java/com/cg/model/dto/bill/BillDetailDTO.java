@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class BillDetailDTO {
     private Long id;
     private Product product;
@@ -22,5 +22,16 @@ public class BillDetailDTO {
     private BigDecimal price;
     private Long quantity;
     private BigDecimal amount;
+    private BillDTO billDTO;
 
+    public BillDetailDTO(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, Bill bill) {
+        this.id = id;
+        this.product = product;
+        this.title = title;
+        this.unit = unit;
+        this.price = price;
+        this.quantity = quantity;
+        this.amount = amount;
+        this.billDTO= bill.toBillDTO();
+    }
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>List of Figure</title>
+    <title>My Account</title>
     <th:block th:replace="/layout/head :: head"></th:block>
     <link rel="stylesheet" href="/assets/bootstrap/v5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
@@ -19,15 +19,17 @@
             padding-left: 100px;
         }
 
-        .product-unit {
-            font-weight: bold;
+        .product-price-unit {
+            display: flex;
+            justify-content: space-between;
+            margin-left: 0;
+            margin-right: 0;
         }
 
-        .product-price {
-            color: #ff6600;
-            font-weight: bold;
-        }
-
+        /*.product-price {*/
+        /*    color: #ff6600;*/
+        /*    font-weight: bold;*/
+        /*}*/
         .product-cart {
             margin: 5px;
             padding: 0;
@@ -72,123 +74,57 @@
             padding: 0;
         }
 
-        .card a {
-            padding: 0;
-        }
-
-        .card-body h5, span {
-            text-align: left;
-        }
-
-        .cart-count {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 4px;
-            width: 20px;
-            height: 20px;
-            position: absolute;
-            top: 0;
-            right: 0;
-            font-size: 14px;
-        }
-
-        .fa-cart-shopping {
-            position: relative;
-        }
-
-        .btn {
-            position: relative;
-        }
-
-        .sort-search {
-            float: right;
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            z-index: 999;
-            top: 100%;
-            left: 0;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #fff;
-        }
-
-        .filter_group-subtitle {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .product_price {
             padding: 10px;
-            background-color: #f5f5f5;
-            border-radius: 4px;
         }
 
-        .filter_group-subtitle .icon-control {
-            transition: transform 0.3s ease;
+        .current_price-format {
+            color: red;
+            font-weight: bolder;
         }
 
-        .open .filter_group-subtitle .icon-control {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu .filter_group-content {
-            padding: 10px;
-            text-align: center;
-        }
-
-        .dropdown-menu .checkbox-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .dropdown-menu .checkbox-list li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .dropdown-menu .checkbox-list input[type="checkbox"] {
-            margin-right: 5px;
-        }
-
-        .dropdown-menu .checkbox-list label {
-            margin: 0;
-        }
-
-        .dropdown-menu .checkbox-list label {
-            font-weight: bold;
-        }
-
-        .dropdown-menu .checkbox-list input[type="checkbox"]:checked + label {
-            color: #f00;
-        }
-
-        .filter_group-subtitle .dropdown-menu {
-            left: 30px;
-        }
-
-        .filter_group .btn-search {
-            background-color: #FFFFFF;
-            border: #FFFFFF;
-        }
-
-        #paginationNav {
-            margin-top: 10px;
-            justify-content: center;
+        .product-quantity {
+            width: 70px;
         }
 
         #totalAmount {
             color: red;
         }
 
+        .product-detail-title {
+            padding: 50px;
+        }
+        .my-account-menu {
+            float: left;
+        }
+        .my-account {
+            margin-top: 10px;
+        }
+        /*#account-info {*/
+        /*    max-width: 400px;*/
+        /*    background-color: #f0f0f0;*/
+        /*    padding: 20px;*/
+        /*    border-radius: 5px;*/
+        /*}*/
+
+        /*.account-info-detail {*/
+        /*    margin-bottom: 10px;*/
+        /*}*/
+
+        /*.fas {*/
+        /*    margin-right: 10px;*/
+        /*}*/
+
+        /*#btnUpdateAccount {*/
+        /*    display: block;*/
+        /*    width: 100%;*/
+        /*    padding: 10px;*/
+        /*    background-color: #0088cc;*/
+        /*    color: #fff;*/
+        /*    border: none;*/
+        /*    border-radius: 5px;*/
+        /*    cursor: pointer;*/
+        /*}*/
     </style>
 </head>
 
@@ -202,119 +138,17 @@
             <div class="container-fluid">
                 <div class="table-title">
                     <div class="row">
-                        <div class="col-sm-3">
-                            <h1>List Of Figure</h1>
-                        </div>
-                        <div class="col-sm-6 sort-search">
-
-                            <div class="row">
-
-                                <div class="filter_group col-sm-4">
-                                    <div class="filter_group_block">
-                                        <div class="filter_group-subtitle dropdown-toggle" id="categoryDropdown"
-                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span>Danh mục</span>
-                                        </div>
-                                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                                            <div class="filter_group-content">
-                                                <ul class="checkbox-list">
-                                                    <li>
-                                                        <button class="btn-search" type="button">
-                                                            <input type="checkbox" id="category-onepiece"
-                                                                   name="category"
-                                                                   value="1">
-                                                            <label for="category-onepiece">ONE PIECE</label>
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button class="btn-search" type="button">
-                                                            <input type="checkbox" id="category-dragonball"
-                                                                   name="category"
-                                                                   value="2">
-                                                            <label for="category-dragonball">DRAGON BALL</label>
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="filter_group col-sm-5" aria-expanded="true">
-                                    <div class="filter_group_block">
-                                        <div class="filter_group-subtitle dropdown-toggle" id="priceDropdown"
-                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span>Lọc giá</span>
-                                        </div>
-                                        <div class="dropdown-menu" aria-labelledby="priceDropdown">
-                                            <div class="filter_group-content filter-price">
-                                                <ul class="checkbox-list">
-                                                    <li>
-                                                        <button class="btn-search" type="button">
-                                                            <input type="checkbox" id="p1" name="priceCheckbox"
-                                                                   data-minprice="0" data-maxprice="1000000">
-                                                            <label for="p1">
-                                                                <span>Dưới</span> 1.000.000₫
-                                                            </label>
-                                                        </button>
-
-                                                    </li>
-                                                    <li>
-                                                        <button class="btn-search" type="button">
-                                                            <input type="checkbox" id="p2" name="priceCheckbox"
-                                                                   data-minprice="1000000" data-maxprice="3000000">
-                                                            <label for="p2">
-                                                                1.000.000₫ - 3.000.000₫
-                                                            </label>
-                                                        </button>
-
-                                                    </li>
-                                                    <li>
-                                                        <button class="btn-search" type="button">
-                                                            <input type="checkbox" id="p3" name="priceCheckbox"
-                                                                   data-minprice="3000000" data-maxprice="5000000">
-                                                            <label for="p3">
-                                                                3.000.000₫ - 5.000.000₫
-                                                            </label>
-                                                        </button>
-
-                                                    </li>
-                                                    <li>
-                                                        <button class="btn-search" type="button">
-                                                            <input type="checkbox" id="p4" name="priceCheckbox"
-                                                                   data-minprice="5000000" data-maxprice="10000000">
-                                                            <label for="p4">
-                                                                5.000.000₫ - 10.000.000₫
-                                                            </label>
-                                                        </button>
-
-                                                    </li>
-                                                    <li>
-                                                        <button class="btn-search" type="button">
-                                                            <input type="checkbox" id="p5" name="priceCheckbox"
-                                                                   data-minprice="10000000" data-maxprice="999999999">
-                                                            <label for="p5">
-                                                                <span>Trên</span> 10.000.000₫
-                                                            </label>
-                                                        </button>
-
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
+                        <div class="col-sm-4">
+                            <h1>My Account</h1>
 
                         </div>
-                        <div class="col-sm-2">
+
+                        <div class="col-sm-8">
                             <button type="button" class="btn btn-outline-light modal-cart" id="create">
-                                Giỏ hàng
                                 <i class="fa-solid fa-cart-shopping">
                                 </i>
                                 <span class="cart-count" id="count-cart">0</span>
+                                Sản phẩm
                             </button>
                         </div>
                     </div>
@@ -322,30 +156,64 @@
 
                 <th:block th:replace="/shop/modal-cart :: modal-cart"></th:block>
 
-                <div class="row">
-                    <div id="product-carts" class="row product-carts">
-                        <!--                <div class="card product-cart col-lg-2">-->
-                        <!--                    <img src="https://res.cloudinary.com/toanphat/image/upload/c_scale,w_280,h_180,q_90/c0123_product_images/c690c830-28b7-4bc7-911e-83c408c85d83.jpg" class="card-img-top" alt="...">-->
-                        <!--                    <div class="card-body">-->
-                        <!--                        <h5 class="card-title">Card title</h5>-->
-                        <!--                        <div class="product-price-unit mb-2">-->
-                        <!--                            <span>300.000 đ</span>-->
-                        <!--                            <span>Thùng</span>-->
-                        <!--                        </div>-->
-                        <!--                        <button class="btn btn-outline-primary">Add to cart</button>-->
-                        <!--                    </div>-->
-                        <!--                </div>-->
+                <div class="row my-account">
+
+                        <div id="account-info" th:object="${user}">
+                            <h2>Thông tin tài khoản</h2>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="name_account"> Full Name : <span th:text="*{fullName}"></span></p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="username_account"> Username : <span th:text="*{username}"></span></p>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="email_account"> Email : <span th:text="*{email}"></span></p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="phone_account"> Phone : <span th:text="*{phone}"></span></p>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    <div id="account-history-bill">
+                        <table id="tbBill" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Unit</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Province</th>
+                                <th scope="col">District</th>
+                                <th scope="col">Ward</th>
+                                <th scope="col">Address</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbdBill">
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="7" style="text-align: center"> Tổng tiền đã mua </th>
+                                <th colspan="4"><span id="totalAmount-bill"></span></th>
+
+                            </tr>
+                            </tfoot>
+                        </table>
                     </div>
-                    <nav id="paginationNav">
-                        <ul class="pagination justify-content-center">
-                            <!-- Các nút phân trang sẽ được thêm vào đây -->
-                        </ul>
-                    </nav>
+
                 </div>
             </div>
         </div>
     </div>
-    <a href="/product-detail"></a>
     <th:block th:replace="/layout/footer :: footer"></th:block>
 </div>
 
@@ -369,6 +237,7 @@
             getDelete: AppBase.API_DELETED_CART_ITEM,
             getChangeQuantity: AppBase.API_CHANGE_QUANTITY,
             getSearch: AppBase.API_SEARCH_PRODUCT,
+            getAllBillDetails: AppBase.API_BILL_DETAIL_BY_USER,
 
             getAllProvinces: 'https://vapi.vnappmob.com/api/province/',
             getAllDistricts: 'https://vapi.vnappmob.com/api/province/district/',
@@ -410,7 +279,10 @@
     page.dialogs.elements.wardCr = $('#wardCr')
     page.dialogs.elements.addressCr = $('#addressCr')
 
-    page.commands.getAllProducts = (pageProduct , pageSize) => {
+    page.elements.tbBill = $('#tbBill tbody')
+    page.elements.totalAmountBill = $('#totalAmount-bill')
+
+    page.commands.getAllProducts = (pageProduct, pageSize) => {
         $.ajax({
             type: 'GET',
             url: page.urls.getAllProducts,
@@ -548,6 +420,71 @@
             `;
     }
 
+
+    page.commands.getAllBillDetail = () => {
+        $.ajax({
+            type: 'GET',
+            url: page.urls.getAllBillDetails
+        })
+            .done((data) => {
+                let totalAmount = 0;
+                $.each(data, (index, item) => {
+                    totalAmount = totalAmount + item.amount;
+                    console.log(item)
+                    const str = page.commands.renderHistoryBill(item);
+                    page.elements.tbBill.prepend(str)
+                })
+                page.elements.totalAmountBill.text(totalAmount.toLocaleString('vi', {
+                    style: 'currency',
+                    currency: 'VND'
+                }));
+            })
+            .fail((jqXHR) => {
+                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+            })
+    }
+
+    page.commands.renderHistoryBill = (obj) => {
+        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_280_h_180_Q_100 + '/' + obj.product.productAvatar.fileFolder + '/' + obj.product.productAvatar.fileName;
+        const price = obj.price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+        const amount = obj.amount.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+        return `
+            <tr id="tr_${obj.id}">
+                    <td>
+                        <span class="product-id">${obj.id}</span>
+                    </td>
+                    <td>${obj.title}</td>
+                    <td>
+                         <img src="${imageUrl}" class="card-img-top" alt="...">
+                    </td>
+                    <td>${obj.unit}</td>
+                    <td>
+                        <span class="price-obj" hidden="true">${obj.price}</span>
+                        <span class="price">${price}</span>
+                    </td>
+                    <td>
+                        <span class="quantity">${obj.quantity}</span>
+                    </td>
+                    <td>
+                        <span class="amount">${amount}</span>
+                    </td>
+                    <td>
+                        <span class="province">${obj.billDTO.locationRegionDTO.provinceName}</span>
+                    </td>
+                    <td>
+                        <span class="province">${obj.billDTO.locationRegionDTO.districtName}</span>
+                    </td>
+                    <td>
+                        <span class="province">${obj.billDTO.locationRegionDTO.wardName}</span>
+                    </td>
+                    <td>
+                        <span class="province">${obj.billDTO.locationRegionDTO.address}</span>
+                    </td>
+                </tr>
+        `;
+    }
+
+
     page.commands.getProductById = (productId) => {
         return $.ajax({
             type: 'GET',
@@ -556,7 +493,7 @@
     }
 
 
-    page.commands.search = (pageProduct , pageSize) => {
+    page.commands.search = (pageProduct, pageSize) => {
         let keyword = page.elements.inputSearch.val();
         let categoryIds = '';
         $("input[name='category']:checked").each(function () {
@@ -595,7 +532,7 @@
         priceRanges.sort(function (a, b) {
             return a - b
         });
-        if(count === 0) {
+        if (count === 0) {
             minPrice = '';
             maxPrice = '';
         } else {
@@ -624,7 +561,7 @@
             dataType: 'json',
         })
             .done((data) => {
-                if(data === undefined) {
+                if (data === undefined) {
                     page.elements.pagination.empty();
                     page.elements.productCarts.empty();
                     AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageEn.ERROR_FIND_PRODUCT);
@@ -669,7 +606,7 @@
     }
 
     page.commands.doAddToCart = () => {
-        $('.btnAddCart').on('click', function () {
+        $('.btn-addCart').on('click', function () {
             let productId = $(this).data('id');
             let cartItem = {
                 productId: productId,
@@ -776,7 +713,7 @@
         $('.changeQuantity').on('click', function () {
             let cartDetailId = $(this).data('id');
             let quantity = $(this).find('.quantity-input').val()
-            if(Number(quantity) <= 0) {
+            if (Number(quantity) <= 0) {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -788,12 +725,11 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         page.dialogs.commands.doDelete(cartDetailId);
-                    }else {
+                    } else {
                         $('.quantity-input').val('1')
                     }
                 })
-            }
-            else {
+            } else {
                 let cartDetail = {
                     quantity: quantity
                 }
@@ -840,14 +776,14 @@
         if (pay === 'momo') {
             bill = {
                 locationRegionReqDTO: {
-                provinceId: page.dialogs.elements.provinceCr.val(),
-                provinceName: page.dialogs.elements.provinceCr.find('option:selected').text(),
-                districtId: page.dialogs.elements.districtCr.val(),
-                districtName: page.dialogs.elements.districtCr.find('option:selected').text(),
-                wardId: page.dialogs.elements.wardCr.val(),
-                wardName: page.dialogs.elements.wardCr.find('option:selected').text(),
-                address: page.dialogs.elements.addressCr.val()
-            },
+                    provinceId: page.dialogs.elements.provinceCr.val(),
+                    provinceName: page.dialogs.elements.provinceCr.find('option:selected').text(),
+                    districtId: page.dialogs.elements.districtCr.val(),
+                    districtName: page.dialogs.elements.districtCr.find('option:selected').text(),
+                    wardId: page.dialogs.elements.wardCr.val(),
+                    wardName: page.dialogs.elements.wardCr.find('option:selected').text(),
+                    address: page.dialogs.elements.addressCr.val()
+                },
                 status: "DONE"
             }
         }
@@ -889,110 +825,110 @@
                 $("#frmPayment input.error").removeClass("error");
             })
             .fail((jqXHR) => {
-                // console.log(jqXHR.messages)
+
                 AppBase.SweetAlert.showErrorAlert(jqXHR.responseJSON.message);
             })
     }
 
     page.dialogs.loadData.getAllProvinces = () => {
-            return $.ajax({
-                headers: {
-                    'accept': 'application/json',
-                    'content-type': 'application/json'
-                },
-                type: 'GET',
-                url: page.urls.getAllProvinces,
+        return $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            type: 'GET',
+            url: page.urls.getAllProvinces,
+        })
+            .done((res) => {
+                const data = res.results
+                page.dialogs.elements.provinceCr.empty();
+                $.each(data, (index, item) => {
+                    let str = `<option value="${item.province_id}">${item.province_name}</option>`;
+                    page.dialogs.elements.provinceCr.append(str);
+                })
             })
-                .done((res) => {
-                    const data = res.results
-                    page.dialogs.elements.provinceCr.empty();
-                    $.each(data, (index, item) => {
-                        let str = `<option value="${item.province_id}">${item.province_name}</option>`;
-                        page.dialogs.elements.provinceCr.append(str);
-                    })
-                })
-                .fail((jqXHR) => {
-                    AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_400);
-                })
-
-        }
-
-        page.commands.addEventChangeProvince = () => {
-            page.dialogs.elements.provinceCr.on("change", function () {
-                let provinceId = $(this).val();
-                if (provinceId !== 0) {
-                    page.dialogs.loadData.getAllDistricts(provinceId).then(() => {
-                        let districtId = page.dialogs.elements.districtCr.val();
-                        page.dialogs.loadData.getAllWards(districtId);
-                    })
-                }
+            .fail((jqXHR) => {
+                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_400);
             })
-        }
 
+    }
 
-        page.dialogs.loadData.getAllDistricts = (provinceId) => {
-            return $.ajax({
-                headers: {
-                    'accept': 'application/json',
-                    'content-type': 'application/json'
-                },
-                type: 'GET',
-                url: page.urls.getAllDistricts + provinceId,
-            })
-                .done((res) => {
-                    const data = res.results
-                    page.dialogs.elements.districtCr.empty();
-                    $.each(data, (index, item) => {
-                        let str = `<option value="${item.district_id}">${item.district_name}</option>`;
-                        page.dialogs.elements.districtCr.append(str);
-                    })
-                })
-                .fail((jqXHR) => {
-                    AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_400);
-                })
-        }
-
-        page.commands.addEventChangeDistrict = () => {
-
-            page.dialogs.elements.districtCr.on("change", function () {
-                let districtId = $(this).val();
-                if (districtId !== 0) {
-                    page.dialogs.loadData.getAllWards(districtId);
-                }
-
-            })
-        }
-
-        page.dialogs.loadData.getAllWards = (districtId) => {
-            return $.ajax({
-                headers: {
-                    'accept': 'application/json',
-                    'content-type': 'application/json'
-                },
-                type: 'GET',
-                url: page.urls.getAllWards + districtId,
-            })
-                .done((res) => {
-                    const data = res.results
-                    page.dialogs.elements.wardCr.empty();
-                    $.each(data, (index, item) => {
-                        let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
-                        page.dialogs.elements.wardCr.append(str);
-                    })
-                })
-                .fail((jqXHR) => {
-                    AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_400);
-                })
-        }
-
-        page.commands.resetLocationRegion = () => {
-            page.dialogs.loadData.getAllProvinces().then(() => {
-                const provinceId = page.dialogs.elements.provinceCr.val()
+    page.commands.addEventChangeProvince = () => {
+        page.dialogs.elements.provinceCr.on("change", function () {
+            let provinceId = $(this).val();
+            if (provinceId !== 0) {
                 page.dialogs.loadData.getAllDistricts(provinceId).then(() => {
-                    const districtId = page.dialogs.elements.districtCr.val()
-                    page.dialogs.loadData.getAllWards(districtId)
-                });
+                    let districtId = page.dialogs.elements.districtCr.val();
+                    page.dialogs.loadData.getAllWards(districtId);
+                })
+            }
+        })
+    }
+
+
+    page.dialogs.loadData.getAllDistricts = (provinceId) => {
+        return $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            type: 'GET',
+            url: page.urls.getAllDistricts + provinceId,
+        })
+            .done((res) => {
+                const data = res.results
+                page.dialogs.elements.districtCr.empty();
+                $.each(data, (index, item) => {
+                    let str = `<option value="${item.district_id}">${item.district_name}</option>`;
+                    page.dialogs.elements.districtCr.append(str);
+                })
+            })
+            .fail((jqXHR) => {
+                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_400);
+            })
+    }
+
+    page.commands.addEventChangeDistrict = () => {
+
+        page.dialogs.elements.districtCr.on("change", function () {
+            let districtId = $(this).val();
+            if (districtId !== 0) {
+                page.dialogs.loadData.getAllWards(districtId);
+            }
+
+        })
+    }
+
+    page.dialogs.loadData.getAllWards = (districtId) => {
+        return $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            type: 'GET',
+            url: page.urls.getAllWards + districtId,
+        })
+            .done((res) => {
+                const data = res.results
+                page.dialogs.elements.wardCr.empty();
+                $.each(data, (index, item) => {
+                    let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
+                    page.dialogs.elements.wardCr.append(str);
+                })
+            })
+            .fail((jqXHR) => {
+                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_400);
+            })
+    }
+
+    page.commands.resetLocationRegion = () => {
+        page.dialogs.loadData.getAllProvinces().then(() => {
+            const provinceId = page.dialogs.elements.provinceCr.val()
+            page.dialogs.loadData.getAllDistricts(provinceId).then(() => {
+                const districtId = page.dialogs.elements.districtCr.val()
+                page.dialogs.loadData.getAllWards(districtId)
             });
+        });
     }
 
     page.dialogs.elements.frmPayment.validate({
@@ -1054,9 +990,11 @@
 
 
     page.loadData = () => {
+
         page.commands.getAllCartDetail();
-        page.commands.getAllProducts(1,10);
+        page.commands.getAllProducts(1, 10);
         page.commands.resetLocationRegion();
+        page.commands.getAllBillDetail();
 
     }
 
@@ -1068,11 +1006,11 @@
         $("#search").on('keydown', (event) => {
             if (event.keyCode === 13) {
                 event.preventDefault();
-                page.commands.search(1,10);
+                page.commands.search(1, 10);
             }
         });
         $('.btn-search').on('click', () => {
-            page.commands.search(1,10);
+            page.commands.search(1, 10);
         });
     }
 
@@ -1080,7 +1018,6 @@
         page.loadData();
         page.initializeControlEvent();
     })
-
 
 </script>
 

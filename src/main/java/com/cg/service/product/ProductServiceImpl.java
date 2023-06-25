@@ -12,10 +12,13 @@ import com.cg.repository.ProductRepository;
 import com.cg.service.upload.IUploadService;
 import com.cg.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -90,6 +93,16 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Boolean existsProductById(Long id) {
         return productRepository.existsProductById(id);
+    }
+
+    @Override
+    public Page<ProductDTO> findAllProductDTOByKeyWordAndCategoryAndPrice(String search, List<Long> category, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
+        return productRepository.findAllProductDTOByKeyWordAndCategoryAndPrice(search,category, minPrice, maxPrice, pageable);
+    }
+
+    @Override
+    public Page<ProductDTO> findAllProductDTOPage(Pageable pageable) {
+        return productRepository.findAllProductDTOPage(pageable);
     }
 
     private void uploadAndSaveProductImage(ProductCreateReqDTO productCreateReqDTO, ProductAvatar productAvatar) {

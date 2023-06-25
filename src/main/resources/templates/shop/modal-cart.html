@@ -37,23 +37,55 @@
                         </tfoot>
                     </table>
                     <form method="post" id="frmPayment">
-                    <div class="payment">
-                        <div class="panel-default">
-                            <input class="payment_defult" value="momo" name="payment_method" type="radio"
-                                   data-target="createp_account" />
-                            <label data-toggle="collapse" data-target="#collapsedefult"
-                                   aria-controls="collapsedefult">Momo</label>
+                        <div class="row payment-form-cart">
+                            <div class="col-8 locationRegion">
+                                <div class="row">
+                                    <div class="col-lg-6 form-group">
+                                        <label for="provinceCr" class="form-label">Province</label>
+                                        <select class="form-control" id="provinceCr" name="provinceCr"></select>
+                                        <div class="form-message"></div>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label for="districtCr" class="form-label">District</label>
+                                        <select class="form-control" id="districtCr" name="districtCr"></select>
+                                        <div class="form-message"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 form-group">
+                                        <label for="wardCr" class="form-label">Ward</label>
+                                        <select class="form-control" id="wardCr" name="wardCr"></select>
+                                        <div class="form-message"></div>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label for="addressCr" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="addressCr" name="addressCr"
+                                               placeholder="Enter address">
+                                        <div class="form-message"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-4 payment-cart-group">
+                                <div class="payment">
+                                    <div class="panel-default">
+                                        <input class="payment_defult" value="momo" name="payment_method" type="radio"
+                                               data-target="createp_account" />
+                                        <label data-toggle="collapse" data-target="#collapsedefult"
+                                               aria-controls="collapsedefult">Momo</label>
+                                    </div>
+                                    <div class="panel-default">
+                                        <input class="payment_defult" value="cod" name="payment_method" type="radio"
+                                               data-target="createp_account" />
+                                        <label data-toggle="collapse" data-target="#collapsedefult"
+                                               aria-controls="collapsedefult">Thanh toán khi nhận hàng</label>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-success payment-cart">
+                                        Thanh toán
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="panel-default">
-                            <input class="payment_defult" value="cod" name="payment_method" type="radio"
-                                   data-target="createp_account" />
-                            <label data-toggle="collapse" data-target="#collapsedefult"
-                                   aria-controls="collapsedefult">Thanh toán khi nhận hàng</label>
-                        </div>
-                        <button type="button" class="btn btn-outline-success payment-cart">
-                            Thanh toán
-                        </button>
-                    </div>
                     </form>
                 </div>
             </div>

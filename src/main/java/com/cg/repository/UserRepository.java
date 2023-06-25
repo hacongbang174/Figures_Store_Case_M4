@@ -22,10 +22,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "u.username, " +
             "u.email, " +
             "u.phone, " +
-            "u.locationRegion, " +
             "u.role" +
             ") " +
-            "FROM User u"
+            "FROM User u " +
+            "WHERE u.role.id <> 1"
     )
     List<UserDTO> findAllUserDTO();
     @Query("SELECT NEW com.cg.model.dto.user.UserDTO (" +

@@ -111,12 +111,13 @@ public class CartAPI {
     }
 
     @PostMapping("/payment")
-    public ResponseEntity<?> payment(@RequestBody BillReqDTO billReqDTO) {
+    public ResponseEntity<?> payment(@Valid @RequestBody BillReqDTO billReqDTO) {
         String username = appUtils.getPrincipalUsername();
 
         Optional<User> userOptional = userService.findByUsername(username);
 
         Optional<Cart> cartOptional = cartService.findByUser(userOptional.get());
+
 
         if(cartOptional.isEmpty()) {
             throw new DataInputException("Cart invalid");
@@ -127,8 +128,18 @@ public class CartAPI {
         if(cartDetails.isEmpty()) {
             throw new DataInputException("CartDetail invalid");
         }
+        for (CartDetail cartDetail : cartDetails) {
+            Optional<Product> productOptional = productService.findById(cartDetail.getProduct().getId());
+            Product product = productOptional.get();
+            if (product.getQuantity() < cartDetail.getQuantity()) {
+                throw new DataInputException("Số lượng sản phẩm " + cartDetail.getId() + " không đủ!");
+            }
+            Long quantityNew = product.getQuantity() - cartDetail.getQuantity();
+            product.setQuantity(quantityNew);
+            productService.save(product);
+        }
 
-        Bill bill = billService.save(new Bill(cartOptional.get().getTotalAmount(), userOptional.get(), billReqDTO.getStatus()));
+        Bill bill = billService.save(new Bill(cartOptional.get().getTotalAmount(), userOptional.get(), billReqDTO.getLocationRegionReqDTO().toLocationRegion(null) , billReqDTO.getStatus()));
         for (CartDetail cartDetail : cartDetails) {
             billDetailService.addBillDetail(new BillDetail(cartDetail.getProduct(), cartDetail.getTitle(), cartDetail.getUnit(), cartDetail.getPrice(), cartDetail.getQuantity(),cartDetail.getAmount(), bill), cartDetail);
         }

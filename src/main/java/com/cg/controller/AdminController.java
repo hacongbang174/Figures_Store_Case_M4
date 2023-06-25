@@ -76,4 +76,22 @@ public class AdminController {
         model.addAttribute("roleCode", roleCode);
         return "dashboard/list-user";
     }
+    @GetMapping("/revenue")
+    public String showRevenue(Model model) {
+        String username = appUtils.getPrincipalUsername();
+
+        Optional<User> userOptional = userService.findByUsername(username);
+
+        if (!userOptional.isPresent()) {
+            throw new DataInputException("User not valid");
+        }
+
+        Role role = userOptional.get().getRole();
+        String roleCode = role.getCode();
+
+//        username = username.substring(0, username.indexOf("@"));
+        model.addAttribute("username", username);
+        model.addAttribute("roleCode", roleCode);
+        return "dashboard/revenue";
+    }
 }

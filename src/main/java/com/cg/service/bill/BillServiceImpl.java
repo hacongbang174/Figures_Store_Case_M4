@@ -2,7 +2,10 @@ package com.cg.service.bill;
 
 
 import com.cg.model.Bill;
+import com.cg.model.LocationRegion;
+import com.cg.model.dto.bill.BillDTO;
 import com.cg.repository.BillRepository;
+import com.cg.repository.LocationRegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,9 @@ public class BillServiceImpl implements IBillService {
     @Autowired
     private BillRepository billRepository;
 
+    @Autowired
+    private LocationRegionRepository locationRegionRepository;
+
     @Override
     public List<Bill> findAll() {
         return billRepository.findAll();
@@ -29,6 +35,8 @@ public class BillServiceImpl implements IBillService {
 
     @Override
     public Bill save(Bill bill) {
+        LocationRegion locationRegion = locationRegionRepository.save(bill.getLocationRegion());
+        bill.setLocationRegion(locationRegion);
         return billRepository.save(bill);
     }
 
@@ -40,5 +48,15 @@ public class BillServiceImpl implements IBillService {
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    @Override
+    public List<BillDTO> findAllBillDTO() {
+        return billRepository.findAllBillDTO();
+    }
+
+    @Override
+    public List<BillDTO> findBillDTOByIdUser(Long id) {
+        return billRepository.findBillDTOByIdUser(id);
     }
 }

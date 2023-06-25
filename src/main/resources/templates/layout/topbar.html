@@ -6,9 +6,9 @@
                 <form class="app-search">
                     <div class="app-search-box">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search...">
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Search...">
                             <div class="input-group-append">
-                                <button class="btn" type="submit">
+                                <button class="btn btn-search" type="button">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
                             </div>
@@ -74,7 +74,7 @@
                     </div>
 
                     <!-- item-->
-                    <a href="#" class="dropdown-item notify-item">
+                    <a href="/shop/my-account" class="dropdown-item notify-item">
                         <i class="fa-solid fa-circle-user"></i>
                         <span>My Account</span>
                     </a>
@@ -96,7 +96,8 @@
         </ul>
         <!-- LOGO -->
         <div class="logo-box">
-            <a href="#" class="logo text-center">
+            <th:block th:if="${roleCode == 'ADMIN'}" >
+            <a href="/dashboard" class="logo text-center">
                         <span class="logo-lg">
                             <img src="/assets/images/figure.png" alt="" height="80">
                             <!-- <span class="logo-lg-text-light">Xeria</span> -->
@@ -106,7 +107,21 @@
                             <img src="/assets/images/figure.png" alt="" height="80">
                         </span>
             </a>
+            </th:block>
+            <th:block th:if="${roleCode == 'CUSTOMER'}" >
+                <a href="/shop" class="logo text-center">
+                        <span class="logo-lg">
+                            <img src="/assets/images/figure.png" alt="" height="80">
+                            <!-- <span class="logo-lg-text-light">Xeria</span> -->
+                        </span>
+                    <span class="logo-sm">
+                            <!-- <span class="logo-sm-text-dark">X</span> -->
+                            <img src="/assets/images/figure.png" alt="" height="80">
+                        </span>
+                </a>
+            </th:block>
         </div>
+
 
         <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
             <li>

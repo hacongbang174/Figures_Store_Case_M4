@@ -330,3 +330,14 @@ section {
 /*    0% { transform: rotate(0deg); }*/
 /*    100% { transform: rotate(360deg); }*/
 /*}*/
+
+
+.modal-dialog {
+    max-width: 1300px;
+}
+
+.modal-body {
+    margin: 10px;
+    max-height: 600px;
+    overflow-y: auto;
+}

@@ -18,6 +18,7 @@ class AppBase {
     static API_UPDATE_PRODUCT = this.API_PRODUCT + '/update'
     static API_DELETE_PRODUCT = this.API_PRODUCT + '/delete'
     static API_CATEGORY = this.API_SERVER + '/categories'
+    static API_SEARCH_PRODUCT = this.API_PRODUCT + '/search'
 
 
     static API_CART_DETAIL = this.API_SERVER + '/carts'
@@ -25,6 +26,10 @@ class AppBase {
     static API_PAYMENT = this.API_CART_DETAIL + '/payment'
     static API_DELETED_CART_ITEM = this.API_CART_DETAIL + '/delete'
     static API_CHANGE_QUANTITY = this.API_CART_DETAIL + '/change-quantity'
+
+    static API_BILL = this.API_SERVER + '/bills'
+    static API_BILL_DETAIL_BY_USER = this.API_BILL + '/bill-detail-by-user'
+    static API_BILL_DETAIL_BY_BILL = this.API_BILL + '/bill-detail-by-bill'
 
 
     static API_AUTH = this.API_SERVER + "/auth";
@@ -52,6 +57,7 @@ class AppBase {
         static ERROR_LOADING_DISTRICT = "Loading list of district - ward failed !"
         static ERROR_LOADING_WARD = "Loading list of wards - communes - towns failed !";
         static ERROR_NUMBER_QUANTITY = "Số lượng mua vượt quá số lượng đang có!"
+        static ERROR_FIND_PRODUCT = "Không tìm thấy sản phẩm!"
     }
 
     static AlertMessageVi = class {

@@ -9,12 +9,16 @@ import com.cg.service.category.ICategoryService;
 import com.cg.service.product.IProductService;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +37,9 @@ public class ProductAPI {
 
 
     @GetMapping
-    public ResponseEntity<List<?>> findAllProduct() {
+    public ResponseEntity<Page<ProductDTO>> getAllProductDTO(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
         try {
-            List<ProductDTO> productDTOS = productService.findAllProductDTO();
+            Page<ProductDTO> productDTOS = productService.findAllProductDTOPage(PageRequest.of(page - 1, pageSize));
 
             if (productDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -134,5 +138,43 @@ public class ProductAPI {
             throw new DataInputException("Invalid product information");
         }
 
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<ProductDTO>> search(
+            @RequestParam(name = "search", required = false) String search,
+            @RequestParam(name = "ids", required = false) String categories,
+            @RequestParam(name = "minPrice",required = false) String minPrice,
+            @RequestParam(name = "maxPrice", required = false) String maxPrice,
+            @RequestParam("page") int page,
+            @RequestParam("pageSize") int pageSize)
+    {
+
+        List<Long> ids = new ArrayList<>();
+        if (categories == "") {
+            ids.add(1L);
+            ids.add(2L);
+        }else {
+            String[] categoryIds = categories.split(",");
+            for (int i = 0; i< categoryIds.length; i++) {
+                ids.add(Long.parseLong(categoryIds[i]));
+            }
+        }
+        if (maxPrice == "" || minPrice == "") {
+            minPrice = "0";
+            maxPrice = "999999999";
+        }
+        try {
+            Page<ProductDTO> productDTOS = productService.findAllProductDTOByKeyWordAndCategoryAndPrice(search, ids, BigDecimal.valueOf(Long.parseLong(minPrice)) , BigDecimal.valueOf(Long.parseLong(maxPrice)), PageRequest.of(page -1, pageSize));
+
+            if (productDTOS.isEmpty()) {
+                return new ResponseEntity<>(productDTOS, HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(productDTOS, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

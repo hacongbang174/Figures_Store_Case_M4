@@ -1,7 +1,9 @@
 package com.cg.model.dto.cart;
 
 import com.cg.model.Cart;
+import com.cg.model.LocationRegion;
 import com.cg.model.User;
+import com.cg.model.dto.locationRegion.LocationRegionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -26,16 +26,14 @@ public class UserDTO {
     private String password;
     private String email;
     private String phone;
-    private LocationRegionDTO locationRegionDTO;
     private RoleDTO role;
 
-    public UserDTO(Long id, String fullName, String username, String email, String phone, LocationRegion locationRegion, Role role ) {
+    public UserDTO(Long id, String fullName, String username, String email, String phone, Role role ) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
         this.email = email;
         this.phone = phone;
-        this.locationRegionDTO = locationRegion.toLocationRegionDTO();
         this.role = role.toRoleDTO();
     }
     public UserDTO(Long id, String username) {

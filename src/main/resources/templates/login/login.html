@@ -273,10 +273,7 @@
             url: page.urls.register,
             data: JSON.stringify(user)
         }).done((resp) => {
-
             AppBase.Notify.showSuccessAlert("Successful account registration !");
-            alert("Register success");
-
             setTimeout(function () {
 
                 page.elements.usnLogin.val(page.elements.usernameReg.val());
@@ -286,7 +283,7 @@
             }, 1000);
             page.elements.errorRegister.empty();
         }).fail(function (jqXHR) {
-            page.elements.frmRegister[0].reset();
+            // page.elements.frmRegister[0].reset();
 
             if (jqXHR.responseJSON) {
                 if (jqXHR.responseJSON.message) {

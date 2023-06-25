@@ -38,10 +38,6 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String phone;
 
-    @OneToOne
-    @JoinColumn(name = "location_region_id", referencedColumnName = "id")
-    private LocationRegion locationRegion;
-
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Role role;
@@ -60,7 +56,6 @@ public class User extends BaseEntity {
                 .setPassword(password)
                 .setEmail(email)
                 .setPhone(phone)
-                .setLocationRegionDTO(locationRegion.toLocationRegionDTO())
                 .setRole(role.toRoleDTO())
                 ;
     }
